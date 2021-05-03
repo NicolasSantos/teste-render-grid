@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from 'react-virtualized';
+import Header from './Header';
 import Row from './Row';
 
 
-const CustomGrid = ({list}) => {
+const CustomGrid = ({list, onClickColumn}) => {
     const [columnsName, setColumnsName] = useState({});
 
     useEffect(() => {
@@ -34,17 +35,20 @@ const CustomGrid = ({list}) => {
     return (
         <>
             {
-                list 
+                list && list.length > 0
                 ?
-                <Grid
-                    cellRenderer={cellRenderer}
-                    columnCount={Object.keys(list[0]).length || 1}
-                    columnWidth={100}
-                    height={300}
-                    rowCount={list.length}
-                    rowHeight={30}
-                    width={300}
-                />
+                    <div>
+                        <Header columns={columnsName} onClickColumn={onClickColumn}/>
+                        <Grid
+                            cellRenderer={cellRenderer}
+                            columnCount={Object.keys(list[0]).length || 1}
+                            columnWidth={100}
+                            height={300}
+                            rowCount={list.length}
+                            rowHeight={30}
+                            width={300}
+                        />
+                    </div>
                 :
                 <span>Nenhum dado encontrado</span>
             }

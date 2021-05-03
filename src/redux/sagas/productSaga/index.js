@@ -30,9 +30,9 @@ function* fetchProductsFiltered(action) {
 }
 
 export function* productSaga() {
-    yield takeEvery('SET_PRODUCTS_REQUESTED', fetchProducts);
+    yield takeEvery(productsType.SET_PRODUCTS_REQUESTED, fetchProducts);
 }
 
 export function* productsFilteredSaga() {
-    yield takeEvery('SET_PRODUCTS_FILTERED_REQUESTED', fetchProductsFiltered);
+    yield takeEvery(productsType.SET_PRODUCTS_FILTERED_REQUESTED, fetchProductsFiltered);
 }
