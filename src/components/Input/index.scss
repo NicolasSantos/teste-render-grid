@@ -1,0 +1,18 @@
+@import '../../styles/abstracts/variables.scss';
+
+input {
+    width: 80%;
+    height: 40px;
+    max-width: 200px;
+    padding: 0 10px;
+    background: $input-background;
+    border: none;
+    box-sizing: border-box;
+    font-size: 12px;
+
+    &:focus {
+        outline: none;
+        border: 1px solid $input-border;
+        border-right: none;
+    }
+}

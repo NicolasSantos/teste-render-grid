@@ -1,0 +1,17 @@
+@import '../../styles/abstracts/variables.scss';
+
+button {
+    height: 40px;
+    padding: 5px 15px;
+    background: $primary-color;
+    color: $secondary-color;
+    font-size: 17px;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid $button-border;
+    border-left: none;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

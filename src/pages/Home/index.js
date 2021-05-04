@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProducts, setProductsFiltered } from '../../redux/actions/Products';
 import { sortGridColumn } from '../../helpers/Sort';
 import { ORDER_TYPE } from '../../types/sort';
 import CustomGrid from '../../components/CustomGrid';
 import Input from '../../components/Input';
+import Button from '../../components/Button';
+import Loading from '../../components/Loading';
+import './index.scss';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -52,14 +57,19 @@ const Home = () => {
   }
 
   return (
-    <div className="App">
-      <Input label={'Search Product'} name={'product'} placeholder={'Search for Product or Origin'} onChange={onChangeSearch}/>
+    <div className="home">
+        <h1>List of Products</h1>
 
-      <button onClick={() => filterProducts()}>Search</button>
+        <div className={"searchWrapper"}>
+          <Input label={'Search Product'} name={'product'} placeholder={'Search for Product or Origin'} onChange={onChangeSearch}/>
+          <Button onClick={filterProducts} icon={<FontAwesomeIcon icon={faSearch}/>}/>
+        </div>
 
-      {loading && "Loading..."}
-      {!loading && <CustomGrid list={filteredProducts} onClickColumn={sortListByColumn}/>}
-      {!loading && error && "Error..."}
+        {loading && <Loading/>}
+        <br></br>
+        <br></br>
+        {!loading && <CustomGrid list={filteredProducts} onClickColumn={sortListByColumn} sortColumn={sortColumn}/>}
+        {!loading && error && "Error..."}
     </div>
   );
 }

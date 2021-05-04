@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import './index.scss';
 
-const Input = ({name, label, placeholder, onChange}) => {
+const Input = ({name, placeholder, onChange}) => {
     const [value, setValue] = useState('');
 
     const handleChange = (event) => {
@@ -9,10 +10,7 @@ const Input = ({name, label, placeholder, onChange}) => {
     };
 
     return (
-        <div>
-            <label>{label}</label>
-            <input value={value} name={name} onChange={handleChange} placeholder={placeholder}/>
-        </div>
+        <input value={value} name={name} onChange={handleChange} placeholder={placeholder}/>
     )
 }
 

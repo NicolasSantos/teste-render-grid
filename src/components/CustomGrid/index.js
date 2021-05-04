@@ -1,19 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { Grid } from 'react-virtualized';
-import Header from './Header';
-import Row from './Row';
+import React, { useEffect, useState, useRef } from 'react';
+import { Grid, AutoSizer } from 'react-virtualized';
+import Cell from './Cell';
+import './index.scss';
 
 
-const CustomGrid = ({list, onClickColumn}) => {
+const CustomGrid = ({list, onClickColumn, sortColumn}) => {
     const [columnsName, setColumnsName] = useState({});
+    const [gridList, setGridList] = useState([]);
+    const gridContainerElement = useRef(null);
 
     useEffect(() => {
-        setColumnsName(mapColumns(list));
+        if(list && list.length > 0) {
+            let columnsNameMapped = mapColumns(list);
+            let copyList = [...list];
+            
+            copyList.unshift(getColumnsNameHeader(columnsNameMapped));
+            setColumnsName(columnsNameMapped);
+            setGridList(copyList);
+        }
     }, [list])
+
+    const getColumnsNameHeader = (columnsNameMapped) => {
+        let columns = [];
+
+        Object.keys(columnsNameMapped).forEach((key) => {
+            columns[columnsNameMapped[key]] = columnsNameMapped[key];
+        })
+
+        return columns;
+    }
 
     const cellRenderer = ({columnIndex, key, rowIndex, style}) => {
         return (
-            <Row key={key} style={style} text={list[rowIndex][columnsName[columnIndex]]}/>
+            <Cell   key={key} 
+                    style={style} 
+                    value={gridList[rowIndex][columnsName[columnIndex]]} 
+                    isFirstRow={rowIndex === 0}
+                    onClickSort={rowIndex === 0 && onClickColumn}
+                    sortColumn={sortColumn}/>
         );
     }
 
@@ -32,27 +56,47 @@ const CustomGrid = ({list, onClickColumn}) => {
         return {};
     }
 
+    const getColumnWidth = (widthContainer, amountColumns) => {
+        let minColumnWidth = 200;
+
+        if(minColumnWidth < (widthContainer / amountColumns)) {
+            return widthContainer / amountColumns;
+        } else {
+            return minColumnWidth;
+        }
+    }
+
     return (
-        <>
+        <div className={"customGrid"} ref={gridContainerElement}>
             {
                 list && list.length > 0
                 ?
-                    <div>
-                        <Header columns={columnsName} onClickColumn={onClickColumn}/>
-                        <Grid
-                            cellRenderer={cellRenderer}
-                            columnCount={Object.keys(list[0]).length || 1}
-                            columnWidth={100}
-                            height={300}
-                            rowCount={list.length}
-                            rowHeight={30}
-                            width={300}
-                        />
-                    </div>
+                    <>
+                        <AutoSizer disableHeight>
+                            {({ width }) => (
+                                <>
+                                    <Grid
+                                        cellRenderer={cellRenderer}
+                                        columnCount={Object.keys(list[0]).length || 1}
+                                        columnWidth={getColumnWidth(width, Object.keys(list[0]).length) - 5}
+                                        height={500}
+                                        rowCount={gridList.length}
+                                        rowHeight={30}
+                                        width={width}
+                                    />
+                                </>
+                            )}
+                        </AutoSizer>
+                        <br></br>
+                        <span>{list.length} items found</span>
+                    </>
                 :
-                <span>Nenhum dado encontrado</span>
+                <>
+                    <br></br>
+                    <span>No items found</span>
+                </>
             }
-        </>
+        </div>
     )
 }
 

@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import * as productsType from '../../types/Products';
+import * as toastType from '../../types/Toast';
 import productsData from '../../../data/data_full.json';
 
 
@@ -16,6 +17,7 @@ function* fetchProducts() {
         const products = yield call(getJsonProducts);
 
         yield put({ type: productsType.SET_PRODUCTS_SUCCESS, products: products });
+        yield put({ type: toastType.SET_SHOW_TOAST, theme: 'success', message: 'Data loaded successfully!' });
     } catch (e) {
         yield put({ type: productsType.SET_PRODUCTS_FAILED, message: e.message });
     }

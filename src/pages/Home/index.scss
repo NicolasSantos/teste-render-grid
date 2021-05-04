@@ -1,0 +1,9 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    
+    .searchWrapper {
+        display: flex;
+        margin-bottom: 15px;
+    }
+}
