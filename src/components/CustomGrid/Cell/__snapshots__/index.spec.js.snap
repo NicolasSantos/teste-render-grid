@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[COMPONENT] - Cell Snapshot Cell 1`] = `
+<div
+  className="cell undefined"
+>
+  <span
+    className="cell__value"
+  />
+</div>
+`;

@@ -10,11 +10,11 @@ const Cell = ({value, style, isFirstRow, onClickSort, sortColumn}) => {
             <span className={"cell__value"} title={value}>{value}</span>
             {isFirstRow && 
                 <div className="cell__sort" onClick={onClickSort ? () => onClickSort(value) : null}>
-                    {   !sortColumn.columnName || sortColumn.columnName !== value || (sortColumn.columnName === value && sortColumn.order === ORDER_TYPE.DESC)
+                    {   !sortColumn || !sortColumn.columnName || sortColumn.columnName !== value || (sortColumn.columnName === value && sortColumn.order === ORDER_TYPE.DESC)
                         ? <FontAwesomeIcon icon={faChevronUp} size="xs"/> : ''
                     }
 
-                    {   !sortColumn.columnName || sortColumn.columnName !== value || (sortColumn.columnName === value && sortColumn.order === ORDER_TYPE.ASC)
+                    {   !sortColumn || !sortColumn.columnName || sortColumn.columnName !== value || (sortColumn.columnName === value && sortColumn.order === ORDER_TYPE.ASC)
                         ? <FontAwesomeIcon icon={faChevronDown} size="xs"   /> : ''
                     }
                 </div>
